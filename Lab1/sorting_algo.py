@@ -82,7 +82,7 @@ def generate_random_Lay(n, max_value=1000000):
 
 # 6. demo
 S= 10       
-n= 10000
+n= 10000000
 
 data = generate_random_Lay(n)
 data_for_hybrid = data.copy()
