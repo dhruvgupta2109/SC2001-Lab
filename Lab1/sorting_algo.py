@@ -81,7 +81,7 @@ def generate_random_Lay(n, max_value=1000000):
     return [random.randint(1, max_value) for i in range(n)]
 
 # 6. demo
-S = 10       
+S= 10       
 n= 10000
 
 data = generate_random_Lay(n)
