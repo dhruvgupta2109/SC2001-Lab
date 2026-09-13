@@ -1,7 +1,7 @@
 '''
 SC2001 LAB-1:
 1. Gupta Dhruv
-2. ADD YOUR NAME
+2. Gajulapalli Anish Reddy
 3. ADD YOUR NAME
 '''
 
@@ -77,33 +77,36 @@ def merge(L, left, mid, right, counter):
 
 
 # 5. random data generator
-def generate_random_Lay(n, max_value=1000000):
+def generate_random_array(n, max_value=1000000):
     return [random.randint(1, max_value) for i in range(n)]
 
 # 6. demo
-S= 10       
-n= 10000000
+# Wrapped in __main__ so this file can be safely imported by experiment_runner.py
+# without re-running a 10,000,000-element sort every time it's imported.
+if __name__ == "__main__":
+    S = 10
+    n = 10_000_000
 
-data = generate_random_Lay(n)
-data_for_hybrid = data.copy()
-data_for_original = data.copy()
+    data = generate_random_array(n)
+    data_for_hybrid = data.copy()
+    data_for_original = data.copy()
 
-#hybrid sort
-comparisons_hybrid = [0]
-start = time.process_time()
-hybrid_sort(data_for_hybrid, 0, n - 1, S, comparisons_hybrid)
-time_hybrid = time.process_time() - start
+    # hybrid sort
+    comparisons_hybrid = [0]
+    start = time.process_time()
+    hybrid_sort(data_for_hybrid, 0, n - 1, S, comparisons_hybrid)
+    time_hybrid = time.process_time() - start
 
-#merge sort
-comparisons_original = [0]
-start = time.process_time()
-original_merge_sort(data_for_original, 0, n - 1, comparisons_original)
-time_original = time.process_time() - start
+    # merge sort
+    comparisons_original = [0]
+    start = time.process_time()
+    original_merge_sort(data_for_original, 0, n - 1, comparisons_original)
+    time_original = time.process_time() - start
 
-# confirm
-assert data_for_hybrid == sorted(data), "Hybrid sort incorrect"
-assert data_for_original == sorted(data), "Merge sort incorrect"
+    # confirm correctness
+    assert data_for_hybrid == sorted(data), "Hybrid sort incorrect"
+    assert data_for_original == sorted(data), "Merge sort incorrect"
 
-print(f"Array size: {n:,}   S = {S}")
-print(f"Hybrid sort : comparisons: {comparisons_hybrid[0]:,}   time: {time_hybrid:.4f}s")
-print(f"Merge sort  : comparisons: {comparisons_original[0]:,}   time: {time_original:.4f}s")
+    print(f"Array size: {n:,}   S = {S}")
+    print(f"Hybrid sort : comparisons: {comparisons_hybrid[0]:,}   time: {time_hybrid:.4f}s")
+    print(f"Merge sort  : comparisons: {comparisons_original[0]:,}   time: {time_original:.4f}s")
