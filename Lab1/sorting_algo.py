@@ -2,7 +2,7 @@
 SC2001 LAB-1:
 1. Gupta Dhruv
 2. Gajulapalli Anish Reddy
-3. ADD YOUR NAME
+3. Koh Jin En
 '''
 
 import random
