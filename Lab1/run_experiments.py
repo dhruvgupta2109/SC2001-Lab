@@ -25,6 +25,14 @@ FIXED_N_FOR_C2 = 1000000
 S_VALUES_FOR_C2 = [2, 5, 10, 20, 50, 75, 100, 150, 200, 300, 500]
 
 
+#(c)(iii): vary s, vary n
+#from results - comparison and time, fastest pt sits arnd 5-20 so s can conc arnd that range
+#from results when n = 1000 and 5000, time doesnt changes much, not thast sig so can start from 10000
+S_VALUES_FOR_C3 = [2, 5, 8, 10, 13, 16, 20, 24, 32, 55, 64]
+N_VALUES_FOR_C3 = [10000, 50000, 100000, 500000, 1000000, 5000000, 10000000]
+
+
+
 def time_hybrid(data, S):
     arr = data.copy()
     counter = [0]
