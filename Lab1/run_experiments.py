@@ -54,6 +54,17 @@ def run_c2(writer):
         writer.writerow({"part": "c2", "n": FIXED_N_FOR_C2, "S": S,
                           "comparisons": comps, "time_seconds": elapsed})
 
+def run_c3(writer):
+    print(f"\n[c3] finding optimal S across varying n and S:")
+    for n in N_VALUES_FOR_C3:
+        print(f"\nTesting array size n = {n:,}")
+        data = generate_random_array(n)
+
+        for S in S_VALUES_FOR_C3:
+            comps, elapsed = time_hybrid(data, S)
+            print(f"  S={S:>3}  comparisons={comps:>12,}  time={elapsed:.4f}s")
+            writer.writerow({"part" : "c3", "n" : n, "S": S, "comparisons": comps, "time_seconds": elapsed})
+
 
 def main():
     random.seed(RANDOM_SEED)
@@ -64,6 +75,7 @@ def main():
         writer.writeheader()
         run_c1(writer)
         run_c2(writer)
+        run_c3(writer) 
 
     print(f"\nDone. Results written to {OUTPUT_CSV}")
 
