@@ -45,6 +45,50 @@ ax.set_ylabel("Key comparisons")
 ax.set_title(f"(c)(ii) Comparisons vs. S  (n = {n_fixed:,} fixed)")
 ax.legend()
 ax.grid(True, alpha=0.3)
+
+
+#----------(c)(iii): time vs s, n as line------
+c3 = df[df["part"] == "c3"].copy()
+fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(16, 5))
+
+#subgraph 1
+small_sizes = [10000, 50000, 100000, 500000, 1000000]
+for n_val in small_sizes:
+    subset = c3[c3["n"] == n_val].sort_values("S")
+    if not subset.empty:
+        ax1.plot(subset["S"], subset["time_seconds"], marker="o", label=f"n = {n_val:,}")
+
+ax1.set_xlabel("Threshold S")
+ax1.set_ylabel("CPU Time (seconds)")
+ax1.set_title("Sizes n = 10k to 1M")
+ax1.legend()
+ax1.grid(True, alpha=0.3)
+
+#subgraph 2: n = 5 mil
+subset_5m = c3[c3["n"] == 5000000].sort_values("S")
+if not subset_5m.empty:
+    ax2.plot(subset_5m["S"], subset_5m["time_seconds"], marker="o", color="#8c564b", label="n = 5M")
+ax2.set_xlabel("Threshold S")
+ax2.set_ylabel("CPU Time (seconds)")
+ax2.set_title("Size n = 5,000,000")
+ax2.legend()
+ax2.grid(True, alpha=0.3)
+
+#subgraph 2: n = 10 mil
+subset_10m = c3[c3["n"] == 10_000_000].sort_values("S")
+if not subset_10m.empty:
+    ax3.plot(subset_10m["S"], subset_10m["time_seconds"], marker="o", color="#e377c2", label="n = 10M")
+ax3.set_xlabel("Threshold S")
+ax3.set_ylabel("CPU Time (seconds)")
+ax3.set_title("Size n = 10,000,000")
+ax3.legend()
+ax3.grid(True, alpha=0.3)
+
+fig.suptitle("Part (c)(iii): Optimal S Across Different Scale Regimes", fontsize=14, fontweight="bold")
+fig.tight_layout()
+fig.savefig("plots/optimal_s_split.png", dpi=150)
+print("Saved plots/optimal_s_split.png")
+plt.show()
 fig.tight_layout()
 fig.savefig("plots/comparisons_vs_S.png", dpi=150)
 print("Saved plots/comparisons_vs_S.png")
