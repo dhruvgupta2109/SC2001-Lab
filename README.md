@@ -5,7 +5,7 @@ Code for our SC2001 (Algorithm Design and Analysis) lab projects.
 ## Team Members
 - Gupta Dhruv (U2523576H)
 - Gajulapalli Anish Reddy (U2523276F)
-- Add your name + matric number here
+- Koh Jin En (U2521578F)
 
 
 ## Repo Structure
