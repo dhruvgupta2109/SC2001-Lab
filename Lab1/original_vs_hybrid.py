@@ -1,6 +1,7 @@
 import random
 import sys
 import time
+import csv
 
 from sorting_algo import generate_random_array, hybrid_sort, original_merge_sort
 
@@ -9,7 +10,7 @@ sys.setrecursionlimit(2000000)
 RANDOM_SEED = 42
 S_VALUE = 10
 N_VALUE = 10000000
-
+OUTPUT_CSV = "results_partd.csv"
 
 def is_sorted(arr):
     return all(arr[i] <= arr[i + 1] for i in range(len(arr) - 1))
@@ -52,6 +53,13 @@ def main():
     print(f"Time Saved:        {time_diff:.4f}s ({percentage_faster:.2f}% faster)")
     print(f"Comparisons Saved: {comp_diff:,}")
 
+    with open(OUTPUT_CSV, "w", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=["algorithm", "n", "S", "comparisons", "time_seconds"])
+        writer.writeheader()
+        writer.writerow({"algorithm": "Hybrid Sort", "n": N_VALUE, "S": S_VALUE, "comparisons": h_comps, "time_seconds": round(h_time, 4),})
+        writer.writerow({"algorithm": "Original Merge Sort", "n": N_VALUE, "S": 1, "comparisons": m_comps, "time_seconds": round(m_time, 4),})
+
+        print(f"\nSaved results to {OUTPUT_CSV}")
 
 if __name__ == "__main__":
     main()
