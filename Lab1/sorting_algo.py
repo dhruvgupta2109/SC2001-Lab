@@ -34,7 +34,7 @@ def original_merge_sort(L, left, right, counter):
     return L
 
 
-# 4. hybrod sort (merge sort + insertion sort switch at threshold S)
+# 4. hybrid sort (merge sort + insertion sort switch at threshold S)
 def hybrid_sort(L, left, right, S, counter):
     size = right - left + 1
     if size <= S:
