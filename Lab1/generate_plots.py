@@ -50,6 +50,9 @@ fig2.savefig("plots/comparisons_vs_S.png", dpi=150)
 print("Saved plots/comparisons_vs_S.png")
 
 # ---- (c)(iii): CPU time vs S, one line per size ----
+# NOTE: plotting "time_seconds_min" (best-of-repeats) instead of the mean.
+# System noise (OS scheduling, GC, etc.) only ever slows a run down, so the
+# minimum across repeats is a cleaner estimate of the algorithm's true cost.
 c3 = df[df["part"] == "c3"].copy()
 fig3, (ax3a, ax3b, ax3c) = plt.subplots(1, 3, figsize=(16, 5))
 
@@ -58,10 +61,10 @@ small_sizes = [10000, 50000, 100000, 500000, 1000000]
 for n_val in small_sizes:
     subset = c3[c3["n"] == n_val].sort_values("S")
     if not subset.empty:
-        ax3a.plot(subset["S"], subset["time_seconds"], marker="o", label=f"n = {n_val:,}")
+        ax3a.plot(subset["S"], subset["time_seconds_min"], marker="o", label=f"n = {n_val:,}")
 
 ax3a.set_xlabel("Threshold S")
-ax3a.set_ylabel("CPU Time (seconds)")
+ax3a.set_ylabel("CPU Time (seconds, best of repeats)")
 ax3a.set_title("Sizes n = 10k to 1M")
 ax3a.legend()
 ax3a.grid(True, alpha=0.3)
@@ -69,9 +72,9 @@ ax3a.grid(True, alpha=0.3)
 # subgraph 2: n = 5M
 subset_5m = c3[c3["n"] == 5000000].sort_values("S")
 if not subset_5m.empty:
-    ax3b.plot(subset_5m["S"], subset_5m["time_seconds"], marker="o", color="#8c564b", label="n = 5M")
+    ax3b.plot(subset_5m["S"], subset_5m["time_seconds_min"], marker="o", color="#8c564b", label="n = 5M")
 ax3b.set_xlabel("Threshold S")
-ax3b.set_ylabel("CPU Time (seconds)")
+ax3b.set_ylabel("CPU Time (seconds, best of repeats)")
 ax3b.set_title("Size n = 5,000,000")
 ax3b.legend()
 ax3b.grid(True, alpha=0.3)
@@ -79,9 +82,9 @@ ax3b.grid(True, alpha=0.3)
 # subgraph 3: n = 10M
 subset_10m = c3[c3["n"] == 10_000_000].sort_values("S")
 if not subset_10m.empty:
-    ax3c.plot(subset_10m["S"], subset_10m["time_seconds"], marker="o", color="#e377c2", label="n = 10M")
+    ax3c.plot(subset_10m["S"], subset_10m["time_seconds_min"], marker="o", color="#e377c2", label="n = 10M")
 ax3c.set_xlabel("Threshold S")
-ax3c.set_ylabel("CPU Time (seconds)")
+ax3c.set_ylabel("CPU Time (seconds, best of repeats)")
 ax3c.set_title("Size n = 10,000,000")
 ax3c.legend()
 ax3c.grid(True, alpha=0.3)
