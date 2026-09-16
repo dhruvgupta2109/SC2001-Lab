@@ -1,8 +1,13 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
+from pathlib import Path
 
-df = pd.read_csv("results.csv")
+LAB_DIR = Path(__file__).resolve().parent
+PLOTS_DIR = LAB_DIR / "plots"
+PLOTS_DIR.mkdir(exist_ok=True)
+
+df = pd.read_csv(LAB_DIR / "results.csv")
 
 # ---- (c)(i): comparisons vs n, S fixed ----
 c1 = df[df["part"] == "c1"].sort_values("n")
@@ -25,8 +30,8 @@ ax1.set_title(f"(c)(i) Comparisons vs. n  (S = {S_fixed} fixed)")
 ax1.legend()
 ax1.grid(True, which="both", alpha=0.3)
 fig1.tight_layout()
-fig1.savefig("plots/comparisons_vs_n.png", dpi=150)
-print("Saved plots/comparisons_vs_n.png")
+fig1.savefig(PLOTS_DIR / "comparisons_vs_n.png", dpi=150)
+print(f"Saved {PLOTS_DIR / 'comparisons_vs_n.png'}")
 
 # ---- (c)(ii): comparisons vs S, n fixed ----
 c2 = df[df["part"] == "c2"].sort_values("S")
@@ -46,13 +51,12 @@ ax2.set_title(f"(c)(ii) Comparisons vs. S  (n = {n_fixed:,} fixed)")
 ax2.legend()
 ax2.grid(True, alpha=0.3)
 fig2.tight_layout()
-fig2.savefig("plots/comparisons_vs_S.png", dpi=150)
-print("Saved plots/comparisons_vs_S.png")
+fig2.savefig(PLOTS_DIR / "comparisons_vs_S.png", dpi=150)
+print(f"Saved {PLOTS_DIR / 'comparisons_vs_S.png'}")
 
 # ---- (c)(iii): CPU time vs S, one line per size ----
-# NOTE: plotting "time_seconds_min" (best-of-repeats) instead of the mean.
-# System noise (OS scheduling, GC, etc.) only ever slows a run down, so the
-# minimum across repeats is a cleaner estimate of the algorithm's true cost.
+# Plot the best observed time consistently with the metric used to choose S
+# for the Part (d) comparison. The mean remains available in results.csv.
 c3 = df[df["part"] == "c3"].copy()
 fig3, (ax3a, ax3b, ax3c) = plt.subplots(1, 3, figsize=(16, 5))
 
@@ -91,5 +95,5 @@ ax3c.grid(True, alpha=0.3)
 
 fig3.suptitle("Part (c)(iii): Optimal S Across Different Scale Regimes", fontsize=14, fontweight="bold")
 fig3.tight_layout()
-fig3.savefig("plots/optimal_s_split.png", dpi=150)
-print("Saved plots/optimal_s_split.png")
+fig3.savefig(PLOTS_DIR / "optimal_s_split.png", dpi=150)
+print(f"Saved {PLOTS_DIR / 'optimal_s_split.png'}")

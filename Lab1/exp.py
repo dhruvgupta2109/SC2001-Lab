@@ -8,19 +8,20 @@ format generate_plots.py expects: part, n, S, comparisons, time_seconds.
 Why it's built this way (to reduce noise in the timing results):
 - For a given n, we generate ONE random array and reuse a copy of it
   for every S we test. This means S is the only thing changing between
-  runs -- we're notgi accidentally comparing different random data.
-- Each (n, S) timing is repeated several times. We report both the
-  MEAN and the MINIMUM time. The minimum is useful because system
-  noise (OS scheduling, background processes) can only ever slow a
-  run down, never speed it up -- so the minimum across repeats is a
-  good estimate of the "true" cost with noise stripped out.
+  runs -- we're not accidentally comparing different random data.
+- Each (n, S) timing is repeated several times where practical. We
+  report both the mean and the minimum observed CPU time. The minimum
+  is useful as a best-observed result, while the mean retains run-to-run
+  variation.
 - Garbage collection is switched off during each timed run, so a GC
   pause doesn't get incorrectly counted as part of the algorithm's time.
 """
 
 import csv
 import gc
+import random
 import time
+from pathlib import Path
 from sorting_algo import hybrid_sort, original_merge_sort, generate_random_array
 
 
@@ -36,13 +37,18 @@ def time_one_hybrid_run(arr, S):
     counter = [0]
     n = len(data)
 
-    gc.disable()
-    start = time.process_time()
-    hybrid_sort(data, 0, n - 1, S, counter)
-    elapsed = time.process_time() - start
-    gc.enable()
+    gc_was_enabled = gc.isenabled()
+    if gc_was_enabled:
+        gc.disable()
+    try:
+        start = time.process_time()
+        hybrid_sort(data, 0, n - 1, S, counter)
+        elapsed = time.process_time() - start
+    finally:
+        if gc_was_enabled:
+            gc.enable()
 
-    assert data == sorted(arr), "hybrid_sort produced incorrect output!"
+    assert is_sorted(data), "hybrid_sort produced incorrect output!"
     return counter[0], elapsed
 
 
@@ -55,13 +61,18 @@ def time_one_original_run(arr):
     counter = [0]
     n = len(data)
 
-    gc.disable()
-    start = time.process_time()
-    original_merge_sort(data, 0, n - 1, counter)
-    elapsed = time.process_time() - start
-    gc.enable()
+    gc_was_enabled = gc.isenabled()
+    if gc_was_enabled:
+        gc.disable()
+    try:
+        start = time.process_time()
+        original_merge_sort(data, 0, n - 1, counter)
+        elapsed = time.process_time() - start
+    finally:
+        if gc_was_enabled:
+            gc.enable()
 
-    assert data == sorted(arr), "original_merge_sort produced incorrect output!"
+    assert is_sorted(data), "original_merge_sort produced incorrect output!"
     return counter[0], elapsed
 
 
@@ -80,6 +91,12 @@ def repeated_hybrid(arr, S, repeats):
     return comparisons, sum(times) / len(times), min(times)
 
 
+def is_sorted(arr):
+    return all(arr[i] <= arr[i + 1] for i in range(len(arr) - 1))
+
+
+RANDOM_SEED = 42
+MAX_VALUE = 1_000_000
 S_FIXED = 10          # threshold used for part (c)(i)
 N_FIXED = 1_000_000   # size used for part (c)(ii)
 
@@ -99,19 +116,21 @@ C3_CONFIG = [
     (10000000, [2, 5, 8, 10, 13, 16, 20, 24, 32, 55, 64], 2),
 ]
 
-OUTPUT_FILE = "results.csv"
+LAB_DIR = Path(__file__).resolve().parent
+OUTPUT_FILE = LAB_DIR / "results.csv"
 
 
 # ---------------------------------------------------------
 # Main experiment
 # ---------------------------------------------------------
 def main():
+    random.seed(RANDOM_SEED)
     rows = []
 
     # ----- (c)(i): comparisons vs n, S fixed -----
     print("Part (c)(i): comparisons vs n ...")
     for n in N_VALUES_C1:
-        arr = generate_random_array(n)
+        arr = generate_random_array(n, MAX_VALUE)
         comparisons, mean_t, min_t = repeated_hybrid(arr, S_FIXED, repeats=1)
         rows.append({"part": "c1", "n": n, "S": S_FIXED,
                      "comparisons": comparisons,
@@ -120,7 +139,7 @@ def main():
 
     # ----- (c)(ii): comparisons vs S, n fixed -----
     print("Part (c)(ii): comparisons vs S ...")
-    arr_fixed_n = generate_random_array(N_FIXED)   # SAME array for every S
+    arr_fixed_n = generate_random_array(N_FIXED, MAX_VALUE)   # SAME array for every S
     for S in S_VALUES_C2:
         comparisons, mean_t, min_t = repeated_hybrid(arr_fixed_n, S, repeats=1)
         rows.append({"part": "c2", "n": N_FIXED, "S": S,
@@ -131,7 +150,7 @@ def main():
     # ----- (c)(iii): CPU time vs S, per size, with repeats -----
     print("Part (c)(iii): optimal S per size ...")
     for n, S_list, repeats in C3_CONFIG:
-        arr = generate_random_array(n)   # SAME array for every S at this n
+        arr = generate_random_array(n, MAX_VALUE)   # SAME array for every S at this n
         for S in S_list:
             comparisons, mean_t, min_t = repeated_hybrid(arr, S, repeats=repeats)
             rows.append({"part": "c3", "n": n, "S": S,

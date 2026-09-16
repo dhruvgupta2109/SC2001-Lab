@@ -36,13 +36,21 @@ def original_merge_sort(L, left, right, counter):
 
 # 4. hybrid sort (merge sort + insertion sort switch at threshold S)
 def hybrid_sort(L, left, right, S, counter):
+    """Sort L[left:right + 1] using a positive insertion-sort threshold S."""
+    if not isinstance(S, int) or S < 1:
+        raise ValueError("S must be a positive integer")
+
+    return _hybrid_sort(L, left, right, S, counter)
+
+
+def _hybrid_sort(L, left, right, S, counter):
     size = right - left + 1
     if size <= S:
         insertion_sort(L, left, right, counter)
     else:
         mid = (left + right) // 2
-        hybrid_sort(L, left, mid, S, counter)
-        hybrid_sort(L, mid + 1, right, S, counter)
+        _hybrid_sort(L, left, mid, S, counter)
+        _hybrid_sort(L, mid + 1, right, S, counter)
         merge(L, left, mid, right, counter)
     return L
 

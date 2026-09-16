@@ -1,24 +1,23 @@
 import random
-import sys
 import gc
 import time
 import csv
+from pathlib import Path
 
 from sorting_algo import generate_random_array, hybrid_sort, original_merge_sort
-
-sys.setrecursionlimit(2000000)
 
 RANDOM_SEED = 42
 N_VALUE = 10000000
 REPEATS = 3
-RESULTS_CSV = "results.csv"        # part (c) results, read to find optimal S
-OUTPUT_CSV = "results_partd.csv"
+LAB_DIR = Path(__file__).resolve().parent
+RESULTS_CSV = LAB_DIR / "results.csv"        # part (c) results, read to find optimal S
+OUTPUT_CSV = LAB_DIR / "results_partd.csv"
 
 
-def determine_optimal_S(csv_path=RESULTS_CSV, n_target=N_VALUE, metric="time_seconds"):
+def determine_optimal_S(csv_path=RESULTS_CSV, n_target=N_VALUE, metric="time_seconds_min"):
     """
     Reads the (c)(iii) grid-search rows from results.csv and returns the S
-    value that minimized `metric` (time_seconds by default) at n_target.
+    value that minimized `metric` (best observed CPU time by default) at n_target.
     Falls back to the closest tested n if n_target itself wasn't tested,
     and raises a clear error if there's no c3 data at all.
     """
@@ -45,7 +44,7 @@ def determine_optimal_S(csv_path=RESULTS_CSV, n_target=N_VALUE, metric="time_sec
     best_S = int(best_row["S"])
 
     print(f"[optimal S] at n={chosen_n:,}, S={best_S} minimizes {metric} "
-          f"({float(best_row[metric]):,.0f})")
+          f"({float(best_row[metric]):.4f}s)")
     return best_S
 
 
@@ -56,11 +55,16 @@ def is_sorted(arr):
 def time_hybrid_once(data, S):
     arr = data.copy()
     counter = [0]
-    gc.disable()
-    start = time.process_time()
-    hybrid_sort(arr, 0, len(arr) - 1, S, counter)
-    elapsed = time.process_time() - start
-    gc.enable()
+    gc_was_enabled = gc.isenabled()
+    if gc_was_enabled:
+        gc.disable()
+    try:
+        start = time.process_time()
+        hybrid_sort(arr, 0, len(arr) - 1, S, counter)
+        elapsed = time.process_time() - start
+    finally:
+        if gc_was_enabled:
+            gc.enable()
     assert is_sorted(arr), f"Hybrid sort failed to sort n={len(data)}"
     return counter[0], elapsed
 
@@ -68,18 +72,22 @@ def time_hybrid_once(data, S):
 def time_original_merge_once(data):
     arr = data.copy()
     counter = [0]
-    gc.disable()
-    start = time.process_time()
-    original_merge_sort(arr, 0, len(arr) - 1, counter)
-    elapsed = time.process_time() - start
-    gc.enable()
+    gc_was_enabled = gc.isenabled()
+    if gc_was_enabled:
+        gc.disable()
+    try:
+        start = time.process_time()
+        original_merge_sort(arr, 0, len(arr) - 1, counter)
+        elapsed = time.process_time() - start
+    finally:
+        if gc_was_enabled:
+            gc.enable()
     assert is_sorted(arr), f"Original merge sort failed to sort n={len(data)}"
     return counter[0], elapsed
 
 
 def repeated(run_once, *args, repeats):
-    """Comparisons are deterministic; time is taken as the min across repeats
-    (system noise can only slow a run down, never speed it up)."""
+    """Return deterministic comparisons and the best observed CPU time."""
     times = []
     comparisons = None
     for _ in range(repeats):
@@ -103,11 +111,19 @@ def main():
 
     time_diff = m_time - h_time
     percentage_faster = (time_diff / m_time) * 100
-    comp_diff = m_comps - h_comps
+    comp_diff = h_comps - m_comps
+    comp_percentage = (comp_diff / m_comps) * 100
 
     print("\n" + "=" * 22 + " results " + "=" * 22)
-    print(f"Time Saved:        {time_diff:.4f}s ({percentage_faster:.2f}% faster)")
-    print(f"Comparisons Saved: {comp_diff:,}")
+    if time_diff >= 0:
+        print(f"Hybrid time saved: {time_diff:.4f}s ({percentage_faster:.2f}% faster)")
+    else:
+        print(f"Hybrid extra time: {-time_diff:.4f}s ({-percentage_faster:.2f}% slower)")
+
+    if comp_diff >= 0:
+        print(f"Hybrid comparisons: {comp_diff:,} more ({comp_percentage:.2f}% more)")
+    else:
+        print(f"Hybrid comparisons: {-comp_diff:,} fewer ({-comp_percentage:.2f}% fewer)")
 
     with open(OUTPUT_CSV, "w", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=["algorithm", "n", "S", "comparisons", "time_seconds", "repeats"])
