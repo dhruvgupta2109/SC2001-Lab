@@ -13,17 +13,22 @@ Code for our SC2001 (Algorithm Design and Analysis) lab projects.
 ```
 .
 ├── Lab1/
-|   ├── sorting_algo.py        # insertion sort, original merge sort, hybrid sort, data generator
-|   ├── exp.py                 # runs experiments for (c)(i), (c)(ii), (c)(iii) -> results.csv
-|   ├── original_vs_hybrid.py  # part (d): hybrid vs. original merge sort on n = 10,000,000 -> results_partd.csv
-|   ├── generate_plots.py      # reads results.csv, produces plots/*.png
-|   ├── test_sorting_algo.py   # correctness and edge-case tests
-|   ├── results.csv            # experiment results for part (c)
-|   ├── results_partd.csv      # experiment results for part (d)
-|   ├── plots/                 # generated comparison plots
-|   └── Slides.pptx
-├── requirements.txt
-└── README.md
+│   ├── plots/                         # generated experiment plots
+│   │   ├── comparisons_vs_n.png       # comparisons as input size n increases
+│   │   ├── comparisons_vs_S.png       # comparisons as threshold S changes
+│   │   └── optimal_s_split.png        # CPU time used to select S across input sizes
+│   ├── sorting_algo.py               # sorting algorithms, comparison counting and data generation
+│   ├── test_sorting_algo.py          # correctness and edge-case tests
+│   ├── exp.py                        # runs parts (c)(i)–(c)(iii) and writes results.csv
+│   ├── generate_plots.py             # generates the plots above from results.csv
+│   ├── original_vs_hybrid.py         # runs part (d) and writes results_partd.csv
+│   ├── results.csv                   # measurements from parts (c)(i)–(c)(iii)
+│   ├── results_partd.csv             # hybrid-versus-baseline measurements for part (d)
+│   ├── sc2001_lab1_slides.pptx       # presentation deck
+│   └── sc2001_project1_final.pptx    # final project presentation
+├── .gitignore
+├── requirements.txt                  # Python dependencies
+└── README.md                         # project overview and usage instructions
 ```
 
 ## Setup and Run
