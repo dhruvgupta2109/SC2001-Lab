@@ -84,7 +84,7 @@ def generate_random_array(n, max_value=1000000):
 # Wrapped in __main__ so this file can be safely imported by experiment_runner.py
 # without re-running a 10,000,000-element sort every time it's imported.
 if __name__ == "__main__":
-    S = 10
+    S = 16
     n = 10_000_000
 
     data = generate_random_array(n)
