@@ -8,7 +8,7 @@ format generate_plots.py expects: part, n, S, comparisons, time_seconds.
 Why it's built this way (to reduce noise in the timing results):
 - For a given n, we generate ONE random array and reuse a copy of it
   for every S we test. This means S is the only thing changing between
-  runs -- we're not accidentally comparing different random data.
+  runs -- we're notgi accidentally comparing different random data.
 - Each (n, S) timing is repeated several times. We report both the
   MEAN and the MINIMUM time. The minimum is useful because system
   noise (OS scheduling, background processes) can only ever slow a

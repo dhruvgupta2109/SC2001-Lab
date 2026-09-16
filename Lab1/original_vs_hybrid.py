@@ -9,10 +9,44 @@ from sorting_algo import generate_random_array, hybrid_sort, original_merge_sort
 sys.setrecursionlimit(2000000)
 
 RANDOM_SEED = 42
-S_VALUE = 10
 N_VALUE = 10000000
 REPEATS = 3
+RESULTS_CSV = "results.csv"        # part (c) results, read to find optimal S
 OUTPUT_CSV = "results_partd.csv"
+
+
+def determine_optimal_S(csv_path=RESULTS_CSV, n_target=N_VALUE, metric="time_seconds"):
+    """
+    Reads the (c)(iii) grid-search rows from results.csv and returns the S
+    value that minimized `metric` (time_seconds by default) at n_target.
+    Falls back to the closest tested n if n_target itself wasn't tested,
+    and raises a clear error if there's no c3 data at all.
+    """
+    rows = []
+    with open(csv_path, newline="") as f:
+        for row in csv.DictReader(f):
+            if row["part"] == "c3":
+                rows.append(row)
+
+    if not rows:
+        raise RuntimeError(
+            f"No part-c3 rows found in {csv_path}. Run exp.py first so "
+            "there's data to pick an optimal S from."
+        )
+
+    available_ns = sorted({int(r["n"]) for r in rows}, key=lambda n: abs(n - n_target))
+    chosen_n = available_ns[0]
+    if chosen_n != n_target:
+        print(f"[optimal S] n={n_target:,} wasn't in the c3 sweep; "
+              f"using closest tested size n={chosen_n:,} instead.")
+
+    candidates = [r for r in rows if int(r["n"]) == chosen_n]
+    best_row = min(candidates, key=lambda r: float(r[metric]))
+    best_S = int(best_row["S"])
+
+    print(f"[optimal S] at n={chosen_n:,}, S={best_S} minimizes {metric} "
+          f"({float(best_row[metric]):,.0f})")
+    return best_S
 
 
 def is_sorted(arr):
@@ -56,6 +90,9 @@ def repeated(run_once, *args, repeats):
 
 def main():
     random.seed(RANDOM_SEED)
+
+    S_VALUE = determine_optimal_S()  # was hardcoded to 10, now derived from results.csv
+
     data = generate_random_array(N_VALUE)
 
     h_comps, h_time = repeated(time_hybrid_once, data, S_VALUE, repeats=REPEATS)
