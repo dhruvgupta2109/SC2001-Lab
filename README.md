@@ -26,6 +26,14 @@ Code for our SC2001 (Algorithm Design and Analysis) lab projects.
 │   ├── results_partd.csv             # hybrid-versus-baseline measurements for part (d)
 │   ├── sc2001_lab1_slides.pptx       # presentation deck
 │   └── sc2001_project1_final.pptx    # final project presentation
+├── Lab2/
+│   ├── part_a_matrix_array.py        # matrix + array Dijkstra implementation
+│   ├── part_a_experiment.py          # part (a) empirical analysis
+│   ├── part_a_analysis.md            # part (a) written analysis
+│   ├── test_part_a.py                # part (a) correctness tests
+│   ├── part_b_list_heap.py           # part (b) implementation scaffold
+│   ├── part_b_experiment.py          # part (b) experiment scaffold
+│   └── part_c_comparison.md          # part (c) report scaffold
 ├── .gitignore
 ├── requirements.txt                  # Python dependencies
 └── README.md                         # project overview and usage instructions
@@ -41,6 +49,14 @@ python3 -m unittest discover -s Lab1 -p 'test_*.py'
 python3 Lab1/exp.py
 python3 Lab1/generate_plots.py
 python3 Lab1/original_vs_hybrid.py
+```
+
+For Project 2 part (a):
+
+```bash
+python3 Lab2/part_a_matrix_array.py
+python3 -m unittest discover -s Lab2 -p 'test_*.py'
+python3 Lab2/part_a_experiment.py
 ```
 
 The experiment scripts use random seed `42` and generate integers in the
