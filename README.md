@@ -31,8 +31,10 @@ Code for our SC2001 (Algorithm Design and Analysis) lab projects.
 │   ├── part_a_experiment.py          # part (a) empirical analysis
 │   ├── part_a_analysis.md            # part (a) written analysis
 │   ├── test_part_a.py                # part (a) correctness tests
-│   ├── part_b_list_heap.py           # part (b) implementation scaffold
-│   ├── part_b_experiment.py          # part (b) experiment scaffold
+│   ├── part_b_list_heap.py           # adjacency list + min-heap Dijkstra implementation
+│   ├── part_b_experiment.py          # part (b) empirical analysis
+│   ├── part_b_analysis.md            # part (b) written analysis
+│   ├── test_part_b.py                # part (b) correctness tests
 │   └── part_c_comparison.md          # part (c) report scaffold
 ├── .gitignore
 ├── requirements.txt                  # Python dependencies
@@ -57,6 +59,14 @@ For Project 2 part (a):
 python3 Lab2/part_a_matrix_array.py
 python3 -m unittest discover -s Lab2 -p 'test_*.py'
 python3 Lab2/part_a_experiment.py
+```
+
+For Project 2 part (b):
+
+```bash
+python3 Lab2/part_b_list_heap.py
+python3 -m unittest discover -s Lab2 -p 'test_*.py'
+python3 Lab2/part_b_experiment.py
 ```
 
 The experiment scripts use random seed `42` and generate integers in the
