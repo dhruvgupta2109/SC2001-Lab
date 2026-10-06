@@ -5,15 +5,15 @@
 ### Theoretical complexity comparison
 | operation | part (a): adjacency matrix and array priority queue | part(b): adjacency list and min heap priority queue |
 | :--- | :--- | :--- |
-| **Initialisation** | $O(V)$ | $O(V)$ |
-| **Extract-Min (per call)** | $O(V)$ (linear scan over unvisited elements) | $O(\log V)$ (sift-down in binary heap) |
-| **Extract-Min (total for $V$ calls)** | $O(V^2)$ | $O(V \log V)$ |
-| **Neighbor Scanning (total across run)** | $O(V^2)$ (inspects all $V$ cells per vertex) | $O(E)$ (traverses active incident edges) |
-| **Decrease-Key / Distance Update (per call)** | $O(1)$ (direct array index assignment) | $O(\log V)$ (sift-up using position tracking) |
-| **Decrease-Key / Distance Update (worst-case total)** | $O(E)$ | $O(E \log V)$ |
-| **Total Worst-Case Time Complexity** | **$O(V^2)$** | **$O((V + E) \log V)$** |
-| **Typical / Empirical Time Complexity** | $\approx O(V^2)$ (independent of $E$) | $\approx O(E + V \log V)$ (only few edges sift up) |
-| **Space Complexity** | $O(V^2)$ | $O(V + E)$ |
+| **Initialisation** | O(\|V\|) | O(\|V\|) |
+| **Extract-Min (per call)** | O(\|V\|) (scan all unvisited elemets) | O(log \|V\|) (sift-down binary heap) |
+| **Extract-Min (total for all vertices)** | O(\|V\|^2) | O(\|V\| log \|V\|) |
+| **Scan for neigbours** | O(\|V\|^2) (inspects all \|V\| cells per vertex) | O(\|E\|) (traverses active incident edges) |
+| **Distance Update (per call)** | O(1) (direct array index assignment) | O(log \|V\|) (sift-up using position tracking) |
+| **Distance Update (worst-case total)** | O(\|E\|) | O(\|E\| log \|V\|) |
+| **Total Worst-Case Time Complexity** | **O(\|V\|^2)** | **O((\|V\| + \|E\|) log \|V\|)** |
+| **Typical / Empirical Time Complexity** | ~ O(\|V\|^2) (independent of \|E\|) | ~ O(\|E\| + \|V\| log \|V\|) (only few edges sift up) |
+| **Space Complexity** | O(\|V\|^2) | O(\|V\| + \|E\|) |
 
 - Theoretical running time of both implementations
 - Experimental time as `V` increases
