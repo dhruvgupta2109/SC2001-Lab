@@ -35,11 +35,11 @@
 | **800** | 79,900 | 0.032769 | 0.027746 |
 
 ### Memory usage
-| \|V\|| Part (a): Matrix Space $\Theta(\|V\|^2)$ | Part (b): List Space $\Theta(\|V\| + \|E\|)$ (Sparse, $\|E\| = 5\|V\|$) | Feasibility |
+| \|V\|| Part (a): Matrix Space $\Theta(\|V\|^2)$ [no. of entries] | Part (b): List Space $\Theta(\|V\| + \|E\|)$ (Sparse, $\|E\| = 5\|V\|$) [no. of entries] | Feasibility |
 | :---: | :---: | :---: | :---: |
-| **500** | $500^2 = 250,000$ entries | $500 + 2(2,500) = 5,500$ stored items | Both run easily |
-| **5,000** | $5,000^2 = 25,000,000$ entries | $5,000 + 2(25,000) = 55,000$ stored items | Both run |
-| **50,000** | $50,000^2 = 2,500,000,000$ entries | $50,000 + 2(250,000) = 550,000$ stored items | **Matrix allocation fails**, List completes in 0.90s |
+| **500** | $500^2 = 250,000$ | $500 + 2(2,500) = 5,500$ | Both run easily |
+| **5,000** | $5,000^2 = 25,000,000$ | $5,000 + 2(25,000) = 55,000$  | Both run |
+| **50,000** | $50,000^2 = 2,500,000,000$ | $50,000 + 2(250,000) = 550,000$  | Matrix allocation fails but List completes in 0.90s |
 
 - Theoretical running time of both implementations
 - Experimental time as `V` increases
