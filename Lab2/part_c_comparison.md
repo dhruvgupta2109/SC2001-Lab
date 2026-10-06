@@ -4,8 +4,8 @@
 
 ### Theoretical complexity comparison
 | operation | part (a): adjacency matrix and array priority queue | part(b): adjacency list and min heap priority queue |
-|---:|---:|---:|
-| extract_min | o(|V|) per call --> O(|V|^2) total | O(log |V|) per call --> O(|V| log |V|) total|
+|------------:|-----------------------------------:|--------------------------------------------:|
+| extract_min | 0(|V|) per call --> O(|V|^2) total | O(log |V|) per call --> O(|V| log |V|) total|
 | 200 | 4,975 | 0.001956 |
 | 400 | 19,950 | 0.008049 |
 | 600 | 44,925 | 0.018580 |
