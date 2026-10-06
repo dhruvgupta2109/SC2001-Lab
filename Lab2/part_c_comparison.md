@@ -1,8 +1,8 @@
 # Part (c): Comparison
 
-Complete this section after the experiments for part (b) are available.
-
 ## Results to compare
+
+### Theoretical complexity comparison
 
 - Theoretical running time of both implementations
 - Experimental time as `V` increases
