@@ -9,9 +9,9 @@
 | **Extract-Min (per call)** | O(\|V\|) (scan all unvisited elemets) | O(log \|V\|) (sift-down binary heap) |
 | **Extract-Min (total for all vertices)** | O(\|V\|^2) | O(\|V\| log \|V\|) |
 | **Scan for neigbours** | O(\|V\|^2) (inspects all \|V\| cells per vertex) | O(\|E\|) (traverses active incident edges) |
-| **Distance Update (per call)** | O(1) (direct array index assignment) | O(log \|V\|) (sift-up using position tracking) |
+| **Distance Update (per call)** | O(1) (assign array index directly) | O(log \|V\|) (sift-up using position tracking) |
 | **Distance Update (worst-case total)** | O(\|E\|) | O(\|E\| log \|V\|) |
-| **Total Worst-Case Time Complexity** | **O(\|V\|^2)** | **O((\|V\| + \|E\|) log \|V\|)** |
+| **Total Worst-Case Time Complexity** | O(\|V\|^2) | O((\|V\| + \|E\|) log \|V\|) |
 | **Typical / Empirical Time Complexity** | ~ O(\|V\|^2) (independent of \|E\|) | ~ O(\|E\| + \|V\| log \|V\|) (only few edges sift up) |
 | **Space Complexity** | O(\|V\|^2) | O(\|V\| + \|E\|) |
 
