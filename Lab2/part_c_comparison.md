@@ -4,6 +4,7 @@
 
 ### Theoretical complexity comparison
 | operation | part (a): adjacency matrix and array priority queue | part(b): adjacency list and min heap priority queue |
+| :--- | :--- | :--- |
 | **Initialisation** | $O(V)$ | $O(V)$ |
 | **Extract-Min (per call)** | $O(V)$ (linear scan over unvisited elements) | $O(\log V)$ (sift-down in binary heap) |
 | **Extract-Min (total for $V$ calls)** | $O(V^2)$ | $O(V \log V)$ |
