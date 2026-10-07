@@ -49,7 +49,7 @@
 
 **Circumstances in which part (b) implementation is better**
 1. Sparse Graphs (\|E\| << \|V\|): When vertices have a limited degree (for eg. \|E\| $\approx$ O(\|V\|) ), Part (b) O(\|E\| log \|V\|) complexity completely outperforms the $\Theta(\|V\|^2)$ matrix scan.
-2. Large-Scale Graphs (\|V\| 	$\ge$ 1000 up to \|V\| = 50,000 and beyond): As shown in memory usage chart, Part (b) scales linearly to \|V\| = 50,000 (0.90s), whereas Part (a) becomes impractical past \|V\| $\approx$ 1,000 due to quadratic memory growth ($\Theta(\|V\|^2)$).
+2. Large-Scale Graphs (\|V\| 	$\ge$ 1000 up to \|V\| = 50,000 and beyond): As shown in memory usage chart, Part (b) scales linearly to \|V\| = 50,000 (0.90s), whereas Part (a) becomes impractical past \|V\| $\approx$ 1,000 due to quadratic memory growth $\Theta(\|V\|^2)$.
 3. Real-World Networks: Nearly all real-world networks—including road navigation maps (e.g. google maps), telecommunications routing, and social networks—are naturally sparse action on millions of vertices. As a result, Part (b) represents the industry-standard choice for real-world software.
 
 **How Code Simplicity and Constant Costs Affect Measured Results**
