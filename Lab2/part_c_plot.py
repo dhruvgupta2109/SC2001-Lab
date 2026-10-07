@@ -14,5 +14,5 @@ plt.ylabel('Execution Time (seconds)')
 plt.grid(True, linestyle='--', alpha=0.6)
 plt.legend()
 
-plt.savefig('dijkstra_crossover_plot.png', dpi=300, bbox_inches='tight')
+plt.savefig('part_c.png', dpi=300, bbox_inches='tight')
 plt.show()
