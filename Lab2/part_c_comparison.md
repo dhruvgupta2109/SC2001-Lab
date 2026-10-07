@@ -52,3 +52,12 @@
 2. Large-Scale Graphs (\|V\| 	$\ge$ 1000 up to \|V\| = 50,000 and beyond): As shown in memory usage chart, Part (b) scales linearly to \|V\| = 50,000 (0.90s), whereas Part (a) becomes impractical past \|V\| $\approx$ 1,000 due to quadratic memory growth ($\Theta(\|V\|^2)$).
 3. Real-World Networks: Nearly all real-world networks—including road navigation maps (e.g. google maps), telecommunications routing, and social networks—are naturally sparse action on millions of vertices. As a result, Part (b) represents the industry-standard choice for real-world software.
 
+**How Code Simplicity and Constant Costs Affect Measured Results**
+1. part a
+  - Contiguous array: scanning a row in an adjacency matrix matrix[u][v] accesses contiguous blocks of memory in RAM. Modern CPU architectures prefetch adjacent memory lines into high-speed CPU caches (L1/L2/L3), making sequential iteration extremely fast.
+  - Low constant factor: The inner loops in Part (a) consist of straightforward pointer arithmetic, simple boolean checks (if not visited[v]), and direct index writes, resulting in minimal CPU instruction overhead.
+2. part b
+  - List traversal: An adjacency list consists of dynamic lists or references stored across fragmented memory locations. Iterating through neighbors incurs cache misses (pointer chasing) compared to contiguous matrix scans.
+  - Higher constant factor: In Part (b), maintaining the heap requires navigating tree structures, repeatedly tracking indices in a secondary position array, and swapping items during sift-up and sift-down operations. Each logical step requires multiple low-level instructions.
+
+**Therefore**, Because Part (a) has a much smaller constant factor per operation than the heap-based logic of Part (b), Part (a) outperforms Part (b) as soon as edge density surpasses $\approx$ 35-40%.Even though Part (b)'s theoretical bound is  O((\|V\| + \|E\|) log \|V\|), the constant overhead of maintaining heap invariants and sifting up during decrease_key makes it noticeably slower than Part (a)'s lightweight O(1) direct array overwrites on dense graphs.
