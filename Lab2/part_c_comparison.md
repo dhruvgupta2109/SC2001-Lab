@@ -43,8 +43,12 @@
 
 
 **Circumstances in which part (a) implementation is better**
-1. Dense graph ( \|E\| $\approx$ \|V\|^2, Density > 40%) : When nearly every vertex connects to every other vertex, Part (a)’s O(\|V\|^2) runtime beats Part (b)’s O(\|V\|^2 log \|V\|) by eliminating repeated O(log \|V\|) heap sifts. 
+1. Dense graph ( \|E\| $\approx$ \|V\|^2, Density > 40%) : When nearly every vertex connects to every other vertex, Part (a)’s O(\|V\|^2) runtime beats Part (b)’s O(\|V\|^2 log \|V\|) by eliminating repeated O(log \|V\|) heap sifts.
+2. Small Graphs (\|V\| $\le$ 100): For small problem sizes, the simplicity of contiguous 2D array lookups benefits from CPU cache locality, avoiding the overhead of maintaining binary tree structures and position lookup tables.
+3. Implementation Simplicity: When rapid prototyping is required without external priority queue dependencies, Part (a) requires only standard arrays without needing custom heap index tracking.
 
+**Circumstances in which part (b) implementation is better**
+1. 
 1. Which implementation is better for a sparse graph, where `E` is much
    smaller than `V^2`?
 2. Which implementation is better for a dense graph, where `E` is close to
