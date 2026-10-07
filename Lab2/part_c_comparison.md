@@ -52,5 +52,3 @@
 2. Large-Scale Graphs (\|V\| 	$\ge$ 1000 up to \|V\| = 50,000 and beyond): As shown in memory usage chart, Part (b) scales linearly to \|V\| = 50,000 (0.90s), whereas Part (a) becomes impractical past \|V\| $\approx$ 1,000 due to quadratic memory growth ($\Theta(\|V\|^2)$).
 3. Real-World Networks: Nearly all real-world networks—including road navigation maps (e.g. google maps), telecommunications routing, and social networks—are naturally sparse action on millions of vertices. As a result, Part (b) represents the industry-standard choice for real-world software.
 
-
-3. How do the simpler code and constant costs affect the measured results?
