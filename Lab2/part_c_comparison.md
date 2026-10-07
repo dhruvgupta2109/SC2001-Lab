@@ -41,12 +41,9 @@
 | **5,000** | $5,000^2 = 25,000,000$ | $5,000 + 2(25,000) = 55,000$  | Both run |
 | **50,000** | $50,000^2 = 2,500,000,000$ | $50,000 + 2(250,000) = 550,000$  | Matrix allocation fails but List completes in 0.90s |
 
-- Theoretical running time of both implementations
-- Experimental time as `V` increases
-- Experimental time as `E` increases
-- Memory used by an adjacency matrix and adjacency lists
 
-## Questions to answer
+**Circumstances in which part (a) implementation is better**
+1. Dense graph ( \|E\| $\approx$ \|V\|^2, Density > 40%) : When nearly every vertex connects to every other vertex, Part (a)’s O(\|V\|^2) runtime beats Part (b)’s O(\|V\|^2 log \|V\|) by eliminating repeated O(log \|V\|) heap sifts. 
 
 1. Which implementation is better for a sparse graph, where `E` is much
    smaller than `V^2`?
