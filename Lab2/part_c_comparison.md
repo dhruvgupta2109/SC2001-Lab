@@ -43,14 +43,14 @@
 
 
 **Circumstances in which part (a) implementation is better**
-1. Dense graph ( \|E\| $\approx$ \|V\|^2, Density > 40%) : When nearly every vertex connects to every other vertex, Part (a)’s O(\|V\|^2) runtime beats Part (b)’s O(\|V\|^2 log \|V\|) by eliminating repeated O(log \|V\|) heap sifts.
+1. Dense graph ( \|E\| $\approx$ \|V\|^2, Density > 40%) : When nearly every vertex connects to every other vertex, Part (a) O(\|V\|^2) runtime beats Part (b)’s O(\|V\|^2 log \|V\|) by eliminating repeated O(log \|V\|) heap sifts.
 2. Small Graphs (\|V\| $\le$ 100): For small problem sizes, the simplicity of contiguous 2D array lookups benefits from CPU cache locality, avoiding the overhead of maintaining binary tree structures and position lookup tables.
 3. Implementation Simplicity: When rapid prototyping is required without external priority queue dependencies, Part (a) requires only standard arrays without needing custom heap index tracking.
 
 **Circumstances in which part (b) implementation is better**
-1. 
-1. Which implementation is better for a sparse graph, where `E` is much
-   smaller than `V^2`?
-2. Which implementation is better for a dense graph, where `E` is close to
-   `V^2`?
+1. Sparse Graphs (\|E\| << \|V\|): When vertices have a limited degree (for eg. \|E\| $\approx$ O(\|V\|) ), Part (b) O(\|E\| log \|V\|) complexity completely outperforms the $\Theta(\|V\|^2)$ matrix scan.
+2. Large-Scale Graphs (\|V\| 	$\ge$ 1000 up to \|V\| = 50,000 and beyond): As shown in memory usage chart, Part (b) scales linearly to \|V\| = 50,000 (0.90s), whereas Part (a) becomes impractical past \|V\| $\approx$ 1,000 due to quadratic memory growth ($\Theta(\|V\|^2)$).
+3. Real-World Networks: Nearly all real-world networks—including road navigation maps (e.g. google maps), telecommunications routing, and social networks—are naturally sparse action on millions of vertices. As a result, Part (b) represents the industry-standard choice for real-world software.
+
+
 3. How do the simpler code and constant costs affect the measured results?
