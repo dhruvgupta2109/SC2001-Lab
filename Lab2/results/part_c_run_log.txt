@@ -1,0 +1,17 @@
+density 1%  E = 1247  (a) = 0.01237  (b) = 0.00124  faster: part (b)
+density 10%  E = 12475  (a) = 0.0132  (b) = 0.00493  faster: part (b)
+density 25%  E = 31187  (a) = 0.01467  (b) = 0.01313  faster: part (b)
+density 50%  E = 62375  (a) = 0.0182  (b) = 0.02153  faster: part (a)
+density 75%  E = 93562  (a) = 0.01919  (b) = 0.02424  faster: part (a)
+density 90%  E = 112275  (a) = 0.01998  (b) = 0.0249  faster: part (a)
+density 100%  E = 124750  (a) = 0.02104  (b) = 0.0258  faster: part (a)
+
+V = 100  E = 1237  (a) = 0.000576  (b) = 0.00032
+V = 200  E = 4975  (a) = 0.002259  (b) = 0.000974
+V = 400  E = 19950  (a) = 0.009648  (b) = 0.00583
+V = 600  E = 44925  (a) = 0.022774  (b) = 0.017839
+V = 800  E = 79900  (a) = 0.038653  (b) = 0.033799
+
+Saved C:\Users\Asus\Desktop\SC2001-Lab\Lab2\results\part_c_vary_vertices.csv
+Saved C:\Users\Asus\Desktop\SC2001-Lab\Lab2\results\part_c_results.csv
+Saved C:\Users\Asus\Desktop\SC2001-Lab\Lab2\results\part_c.png
