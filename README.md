@@ -36,6 +36,14 @@ Code for our SC2001 (Algorithm Design and Analysis) lab projects.
 │   ├── part_b_analysis.md            # part (b) written analysis
 │   ├── test_part_b.py                # part (b) correctness tests
 │   └── part_c_comparison.md          # part (c) report scaffold
+├── Lab3/
+│   ├── part_1_recursive.py           # recursive definition of P(C), with a memo
+│   ├── part_1_recursive_definition.md # part (1) definition and explanation
+│   ├── test_part_1.py                # part (1) tests against brute force
+│   ├── part_2_subproblem_graph.py    # builds and draws the subproblem graph for P(15)
+│   ├── part_2_subproblem_graph.md    # part (2) graph and explanation
+│   ├── test_part_2.py                # part (2) graph checks
+│   └── results/                      # generated subproblem graph image
 ├── .gitignore
 ├── requirements.txt                  # Python dependencies
 └── README.md                         # project overview and usage instructions
@@ -67,6 +75,14 @@ For Project 2 part (b):
 python3 Lab2/part_b_list_heap.py
 python3 -m unittest discover -s Lab2 -p 'test_*.py'
 python3 Lab2/part_b_experiment.py
+```
+
+For Project 3 parts (1) and (2):
+
+```bash
+python3 Lab3/part_1_recursive.py
+python3 Lab3/part_2_subproblem_graph.py
+python3 -m unittest discover -s Lab3 -p 'test_*.py'
 ```
 
 The experiment scripts use random seed `42` and generate integers in the
