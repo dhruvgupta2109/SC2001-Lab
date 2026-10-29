@@ -43,7 +43,12 @@ Code for our SC2001 (Algorithm Design and Analysis) lab projects.
 │   ├── part_2_subproblem_graph.py    # builds and draws the subproblem graph for P(15)
 │   ├── part_2_subproblem_graph.md    # part (2) graph and explanation
 │   ├── test_part_2.py                # part (2) graph checks
-│   └── results/                      # generated subproblem graph image
+│   ├── part_3_bottom_up.py           # bottom-up DP and packing reconstruction
+│   ├── part_3_bottom_up_algorithm.md # part (3) pseudocode and explanation
+│   ├── test_part_3.py                # bottom-up tests against brute force
+│   ├── part_4_run_examples.py        # runs P(16) and P(12)
+│   ├── part_4_results.md             # part (4) DP tables and optimal packings
+│   └── results/                      # subproblem graph image and DP run log
 ├── .gitignore
 ├── requirements.txt                  # Python dependencies
 └── README.md                         # project overview and usage instructions
@@ -84,6 +89,18 @@ python3 Lab3/part_1_recursive.py
 python3 Lab3/part_2_subproblem_graph.py
 python3 -m unittest discover -s Lab3 -p 'test_*.py'
 ```
+
+For Project 3 parts (3) and (4), Dhruv's portion:
+
+```bash
+python3 Lab3/part_4_run_examples.py
+python3 -m unittest discover -s Lab3 -p 'test_*.py' -v
+```
+
+The bottom-up algorithm gives `P(16) = 28` for weights `[4, 5, 8]` and
+`P(12) = 16` for weights `[5, 6, 7]`, both with profits `[7, 6, 9]`.
+See [the algorithm](Lab3/part_3_bottom_up_algorithm.md) and
+[the worked results](Lab3/part_4_results.md).
 
 The experiment scripts use random seed `42` and generate integers in the
 inclusive range `[1, 1_000_000]`. The full experiment includes repeated sorts
