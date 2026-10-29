@@ -1,0 +1,61 @@
+Part (4): bottom-up DP results
+
+Object types are numbered 0, 1, 2. Supply is unlimited.
+
+Capacity: 16
+Weights: [4, 5, 8]
+Profits: [7, 6, 9]
+
+ c | P(c) | chosen type
+---+------+------------
+ 0 |    0 | -
+ 1 |    0 | -
+ 2 |    0 | -
+ 3 |    0 | -
+ 4 |    7 | 0
+ 5 |    7 | 0
+ 6 |    7 | 0
+ 7 |    7 | 0
+ 8 |   14 | 0
+ 9 |   14 | 0
+10 |   14 | 0
+11 |   14 | 0
+12 |   21 | 0
+13 |   21 | 0
+14 |   21 | 0
+15 |   21 | 0
+16 |   28 | 0
+
+Answer: P(16) = 28
+Object counts (types 0, 1, 2): [4, 0, 0]
+Total weight: 16
+Unused capacity: 0
+Total profit: 28
+Reconstruction: P(16) -> P(12) -> P(8) -> P(4) -> P(0)
+
+Capacity: 12
+Weights: [5, 6, 7]
+Profits: [7, 6, 9]
+
+ c | P(c) | chosen type
+---+------+------------
+ 0 |    0 | -
+ 1 |    0 | -
+ 2 |    0 | -
+ 3 |    0 | -
+ 4 |    0 | -
+ 5 |    7 | 0
+ 6 |    7 | 0
+ 7 |    9 | 2
+ 8 |    9 | 2
+ 9 |    9 | 2
+10 |   14 | 0
+11 |   14 | 0
+12 |   16 | 0
+
+Answer: P(12) = 16
+Object counts (types 0, 1, 2): [1, 0, 1]
+Total weight: 12
+Unused capacity: 0
+Total profit: 16
+Reconstruction: P(12) -> P(7) -> P(0)
